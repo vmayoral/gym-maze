@@ -51,13 +51,13 @@ class Agent(cellular.Agent):
     def update(self):
         pass
 
-class MazeEnv0(gym.Env):
+class MazeEnv(gym.Env):
     """
     Environment definition
     """
     metadata = {'render.modes': ['human']}
 
-    def __init__(self):
+    def __init__(self, filename="waco.txt"):
         self.directions = 8
 
         self.delay = 2 # delay in the simulation, less implies faster
@@ -67,21 +67,7 @@ class MazeEnv0(gym.Env):
         self.agent = Agent()
         self.destination = Destination()
         # Create the world
-        # waco.txt
-        """
-        XXXXXXXXXXXXXX
-        X            X
-        X XXX X   XX X
-        X  X  XX XXX X
-        X XX      X  X
-        X    X  X    X
-        X X XXX X XXXX
-        X X  X  X    X
-        X XX   XXX  XX
-        X    X       X
-        XXXXXXXXXXXXXX
-        """
-        self.world = cellular.World(Cell, directions=self.directions, filename='waco.txt')
+        self.world = cellular.World(Cell, directions=self.directions, filename=filename)
         self.world.age = 0 # start from age 0
         # Add agents
         self.world.addAgent(self.destination, cell=self.pickRandomLocation())
@@ -178,11 +164,15 @@ class MazeEnv0(gym.Env):
         observation=np.asarray(state_list)
 
         # Update the world accordingly
-        self.world.updateMaze()
+        # self.world.updateMaze()
+
+        # Commenting this out generates the path
+        # in the agent
         if self.renderizing:
             self.world.display.activate(size=30)
             self.world.display.delay = self.delay
 
+        self.world.updateMaze()
         return observation, reward, done, None
 
     def _reset(self):
