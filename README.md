@@ -1,5 +1,7 @@
 Simple mazes for RL algorithms.
 
+**Missing the waco.txt file, not deployed properly**
+
 ### Install
 
 Requirement: OpenAI gym installed.
