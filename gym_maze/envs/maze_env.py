@@ -60,7 +60,7 @@ class MazeEnv0(gym.Env):
     def __init__(self):
         self.directions = 8
 
-        self.delay = -1024 # delay in the simulation, less implies faster
+        self.delay = 2 # delay in the simulation, less implies faster
                             # simulation, does not seem to work with Python 3
         self.renderizing = False
         # Create the agents
